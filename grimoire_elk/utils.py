@@ -36,13 +36,16 @@ from graal.backends.core.cocom import CoCom, CoComCommand
 from graal.backends.core.codep import CoDep, CoDepCommand
 from graal.backends.core.colic import CoLic, CoLicCommand
 # Connectors for Perceval
+from grimoire_elk.enriched.liferay import LiferayEnrich
 from grimoire_elk.raw.hyperkitty import HyperKittyOcean
+from grimoire_elk.raw.liferay import LiferayOcean
 from perceval.backends.core.askbot import Askbot, AskbotCommand
 from perceval.backends.core.bugzilla import Bugzilla, BugzillaCommand
 from perceval.backends.core.bugzillarest import BugzillaREST, BugzillaRESTCommand
 from perceval.backends.core.confluence import Confluence, ConfluenceCommand
 from perceval.backends.core.discourse import Discourse, DiscourseCommand
 from perceval.backends.core.dockerhub import DockerHub, DockerHubCommand
+from perceval.backends.finos.finosmeetings import FinosMeetings, FinosMeetingsCommand
 from perceval.backends.core.gerrit import Gerrit, GerritCommand
 from perceval.backends.core.git import Git, GitCommand
 from perceval.backends.core.github import GitHub, GitHubCommand
@@ -55,6 +58,7 @@ from perceval.backends.core.hyperkitty import HyperKitty, HyperKittyCommand
 from perceval.backends.core.jenkins import Jenkins, JenkinsCommand
 from perceval.backends.core.jira import Jira, JiraCommand
 from perceval.backends.core.launchpad import Launchpad, LaunchpadCommand
+from perceval.backends.core.liferay import Liferay, LiferayCommand
 from perceval.backends.core.mattermost import Mattermost, MattermostCommand
 from perceval.backends.core.mbox import MBox, MBoxCommand
 from perceval.backends.core.mediawiki import MediaWiki, MediaWikiCommand
