@@ -34,12 +34,31 @@ class Mapping(BaseMapping):
         """
 
         mapping = '''
+         {
+            "dynamic":true,
+                "properties": {
+                    "data": {
+                        "properties": {
+                            "body": {
+                                "type": "text",
+                                "index": true
+                            },
+                            "content": {
+                                "type": "text",
+                                "index": true
+                            }
+                        }
+                    }
+                }
+        }
         '''
 
         return {"items": mapping}
 
 
 class LiferayOcean(ElasticOcean):
-    """StackExchange Ocean feeder"""
+    """Liferay Ocean feeder"""
 
     mapping = Mapping
+
+    pass
