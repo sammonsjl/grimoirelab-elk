@@ -85,8 +85,8 @@ class LiferayEnrich(Enrich):
 
         rich_user['type'] = 'user'
         rich_user['display_name'] = user['firstName'] + ' ' + user['lastName']
-        rich_user['email'] = user['emailAddress']
-        rich_user['username'] = user['screenName']
+        # rich_user['email'] = user['emailAddress']
+        # rich_user['username'] = user['screenName']
 
         creation_date = unixtime_to_datetime(user['createDate'] / 1000).isoformat()
         rich_user['creation_date'] = creation_date
@@ -113,7 +113,7 @@ class LiferayEnrich(Enrich):
         user = item['data']
 
         rich_user['type'] = 'blog'
-        rich_user['display_name'] = user['userName']
+        rich_user['author'] = user['userName']
         rich_user['subtitle'] = user['subtitle']
         rich_user['title'] = user['title']
 
@@ -141,24 +141,21 @@ class LiferayEnrich(Enrich):
 
         user = item['data']
 
-        rich_user['type'] = 'user'
-        rich_user['display_name'] = user['firstName'] + ' ' + user['lastName']
+        rich_user['type'] = 'message'
+        rich_user['author'] = user['userName']
         rich_user['parent_message_id'] = user['parentMessageId']
         rich_user['root_message_id'] = user['rootMessageId']
         rich_user['message_id'] = user['messageId']
         rich_user['answer'] = user['answer']
         rich_user['subject'] = user['subject']
 
+        rich_user['is_root_message'] = False
         if user['rootMessageId'] == user['messageId']:
             rich_user['is_root_message'] = True
 
         creation_date = unixtime_to_datetime(user['createDate'] / 1000).isoformat()
         rich_user['creation_date'] = creation_date
         rich_user.update(self.get_grimoire_fields(creation_date, "user"))
-
-        if user['lastLoginDate'] is not None:
-            login_date = unixtime_to_datetime(user['lastLoginDate'] / 1000).isoformat()
-            rich_user['login_date'] = login_date
 
         if self.sortinghat:
             rich_user.update(self.get_item_sh(item))
