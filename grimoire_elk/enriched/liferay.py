@@ -32,26 +32,32 @@ logger = logging.getLogger(__name__)
 class LiferayEnrich(Enrich):
 
     def get_field_author(self):
-        return "userName"
+        return "emailAddress"
+
+    def get_identities(self, item):
+        """ Return the identities from an item """
+
+        user = self.get_sh_identity(item)
+        yield user
 
     def get_sh_identity(self, item, identity_field=None):
         identity = {}
 
         user = item
         if 'data' in item and type(item) == dict:
-            user = item['data'][identity_field]
-        elif identity_field in item:
-            # for answers
-            user = item[identity_field]
+            user = item['data']
 
-        identity['name'] = user['display_name']
+        if 'firstName' in user:
+            identity['name'] = user['firstName'] + ' ' + user['lastName']
+        else:
+            identity['name'] = user['userName']
         identity['email'] = None
         identity['username'] = None
 
-        if 'email' in user:
-            identity['email'] = user['email']
-        if 'screen_name' in user:
-            identity['username'] = user['username']
+        if 'emailAddress' in user:
+            identity['email'] = user['emailAddress']
+        if 'screenName' in user:
+            identity['username'] = user['screenName']
 
         return identity
 
