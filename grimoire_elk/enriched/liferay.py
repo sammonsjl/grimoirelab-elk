@@ -147,7 +147,7 @@ class LiferayEnrich(Enrich):
 
         user = item['data']
 
-        rich_user['type'] = 'message'
+        rich_user['type'] = 'post'
         rich_user['author'] = user['userName']
         rich_user['parent_message_id'] = user['parentMessageId']
         rich_user['root_message_id'] = user['rootMessageId']
@@ -158,6 +158,14 @@ class LiferayEnrich(Enrich):
         rich_user['is_root_message'] = False
         if user['rootMessageId'] == user['messageId']:
             rich_user['is_root_message'] = True
+
+        if user['answer']:
+            rich_user['type'] = 'answer'
+            rich_user['is_message_answer'] = 1
+            rich_user['is_message_post'] = 0
+        else:
+            rich_user['is_message_answer'] = 0
+            rich_user['is_message_post'] = 1
 
         creation_date = unixtime_to_datetime(user['createDate'] / 1000).isoformat()
         rich_user['creation_date'] = creation_date
