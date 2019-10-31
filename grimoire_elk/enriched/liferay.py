@@ -32,7 +32,7 @@ logger = logging.getLogger(__name__)
 class LiferayEnrich(Enrich):
 
     def get_field_author(self):
-        return "emailAddress"
+        return "userName"
 
     def get_identities(self, item):
         """ Return the identities from an item """
@@ -47,10 +47,7 @@ class LiferayEnrich(Enrich):
         if 'data' in item and type(item) == dict:
             user = item['data']
 
-        if 'firstName' in user:
-            identity['name'] = user['firstName'] + ' ' + user['lastName']
-        else:
-            identity['name'] = user['userName']
+        identity['name'] = user['userName']
         identity['email'] = None
         identity['username'] = None
 
@@ -65,9 +62,7 @@ class LiferayEnrich(Enrich):
     def get_rich_item(self, item):
 
         rich_item = {}
-        if item['category'] == 'user':
-            rich_item = self.__get_rich_user(item)
-        elif item['category'] == 'blog':
+        if item['category'] == 'blog':
             rich_item = self.__get_rich_blog(item)
         elif item['category'] == 'message':
             rich_item = self.__get_rich_message(item)
@@ -77,35 +72,6 @@ class LiferayEnrich(Enrich):
         self.add_repository_labels(rich_item)
         self.add_metadata_filter_raw(rich_item)
         return rich_item
-
-    def __get_rich_user(self, item):
-        rich_user = {}
-
-        for f in self.RAW_FIELDS_COPY:
-            if f in item:
-                rich_user[f] = item[f]
-            else:
-                rich_user[f] = None
-
-        user = item['data']
-
-        rich_user['type'] = 'user'
-        rich_user['display_name'] = user['firstName'] + ' ' + user['lastName']
-        # rich_user['email'] = user['emailAddress']
-        # rich_user['username'] = user['screenName']
-
-        creation_date = unixtime_to_datetime(user['createDate'] / 1000).isoformat()
-        rich_user['creation_date'] = creation_date
-        rich_user.update(self.get_grimoire_fields(creation_date, "user"))
-
-        if user['lastLoginDate'] is not None:
-            login_date = unixtime_to_datetime(user['lastLoginDate'] / 1000).isoformat()
-            rich_user['login_date'] = login_date
-
-        if self.sortinghat:
-            rich_user.update(self.get_item_sh(item))
-
-        return rich_user
 
     def __get_rich_blog(self, item):
         rich_user = {}
