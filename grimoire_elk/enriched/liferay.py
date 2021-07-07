@@ -31,8 +31,17 @@ logger = logging.getLogger(__name__)
 
 class LiferayEnrich(Enrich):
 
+    def get_field_event_unique_id(self):
+        pass
+
+    def get_rich_events(self, item):
+        pass
+
     def get_field_author(self):
-        return "userName"
+        return "creator"
+
+    def get_field_unique_id(self):
+        return "item_id"
 
     def get_identities(self, item):
         """ Return the identities from an item """
@@ -45,99 +54,185 @@ class LiferayEnrich(Enrich):
 
         user = item
         if 'data' in item and type(item) == dict:
-            user = item['data']
+            user = item['data']['creator']
 
-        identity['name'] = user['userName']
+        identity['name'] = user['name']
         identity['email'] = None
         identity['username'] = None
 
-        if 'emailAddress' in user:
-            identity['email'] = user['emailAddress']
-        if 'screenName' in user:
-            identity['username'] = user['screenName']
+        if 'emailAddress' in user['userAccount']:
+            identity['email'] = user['userAccount']['emailAddress']
+        if 'alternateName' in user['userAccount']:
+            identity['username'] = user['userAccount']['alternateName']
 
         return identity
 
     @metadata
-    def get_rich_item(self, item):
+    def get_rich_item(self, item, kind='question', question_tags=None):
+        eitem = {}
 
-        rich_item = {}
-        if item['category'] == 'blog':
-            rich_item = self.__get_rich_blog(item)
-        elif item['category'] == 'message':
-            rich_item = self.__get_rich_message(item)
-        else:
-            logger.error("rich item not defined for Liferay category %s", item['category'])
+        # Fields common in questions and answers
+        common_fields = ["headline", "numberOfMessageBoardMessages", "id",
+                         "ratingCount", "ratingAverage",
+                         "ratingValue", "viewCount",
+                         "dateModified", "friendlyUrlPath", "keywords"]
 
-        self.add_repository_labels(rich_item)
-        self.add_metadata_filter_raw(rich_item)
-        return rich_item
+        if kind == 'question':
+            self.copy_raw_fields(self.RAW_FIELDS_COPY, item, eitem)
+            # The real data
+            question = item['data']
 
-    def __get_rich_blog(self, item):
-        rich_user = {}
-
-        for f in self.RAW_FIELDS_COPY:
-            if f in item:
-                rich_user[f] = item[f]
+            eitem["item_id"] = question['question_id']
+            eitem["type"] = 'question'
+            eitem["author"] = None
+            if 'owner' in question and question['owner']['user_type'] == "does_not_exist":
+                logger.warning("[stackexchange] question without owner: {}".format(question['question_id']))
             else:
-                rich_user[f] = None
+                eitem["author"] = question['owner']['display_name']
+                eitem["author_link"] = None
+                if 'link' in question['owner']:
+                    eitem["author_link"] = question['owner']['link']
+                eitem["reputation"] = None
+                if 'reputation' in question['owner']:
+                    eitem["author_reputation"] = question['owner']['reputation']
 
-        user = item['data']
+            # data fields to copy
+            copy_fields = common_fields + ['answer_count']
+            for f in copy_fields:
+                if f in question:
+                    eitem[f] = question[f]
+                else:
+                    eitem[f] = None
 
-        rich_user['type'] = 'blog'
-        rich_user['author'] = user['userName']
-        rich_user['subtitle'] = user['subtitle']
-        rich_user['title'] = user['title']
+            eitem["question_tags"] = question['tags']
+            # eitem["question_tags_custom_analyzed"] = question['tags']
 
-        creation_date = unixtime_to_datetime(user['createDate'] / 1000).isoformat()
-        rich_user['creation_date'] = creation_date
-        rich_user.update(self.get_grimoire_fields(creation_date, "user"))
+            # Fields which names are translated
+            map_fields = {"title": "question_title"}
+            for fn in map_fields:
+                eitem[map_fields[fn]] = question[fn]
+            eitem['title_analyzed'] = question['title']
 
-        if user['displayDate'] is not None:
-            display_date = unixtime_to_datetime(user['displayDate'] / 1000).isoformat()
-            rich_user['display_date'] = display_date
+            eitem['question_has_accepted_answer'] = 0
+            eitem['question_accepted_answer_id'] = None
 
-        if self.sortinghat:
-            rich_user.update(self.get_item_sh(item))
+            if question['answer_count'] >= 1 and 'answers' not in question:
+                logger.warning("[stackexchange] Missing answers for question {}".format(question['question_id']))
+            elif question['answer_count'] >= 1 and 'answers' in question:
+                answers_id = [p['answer_id'] for p in question['answers']
+                              if 'is_accepted' in p and p['is_accepted']]
+                eitem['question_accepted_answer_id'] = answers_id[0] if answers_id else None
+                eitem['question_has_accepted_answer'] = 1 if eitem['question_accepted_answer_id'] else 0
 
-        return rich_user
+            creation_date = unixtime_to_datetime(question["creation_date"]).isoformat()
+            eitem['creation_date'] = creation_date
+            eitem.update(self.get_grimoire_fields(creation_date, "question"))
 
-    def __get_rich_message(self, item):
-        rich_user = {}
+            if self.sortinghat:
+                eitem.update(self.get_item_sh(item))
 
-        for f in self.RAW_FIELDS_COPY:
-            if f in item:
-                rich_user[f] = item[f]
+            if self.prjs_map:
+                eitem.update(self.get_item_project(eitem))
+
+            self.add_repository_labels(eitem)
+            self.add_metadata_filter_raw(eitem)
+
+        elif kind == 'answer':
+            answer = item
+
+            eitem["type"] = 'answer'
+            eitem["item_id"] = answer['answer_id']
+            eitem["author"] = None
+            if 'owner' in answer and answer['owner']['user_type'] == "does_not_exist":
+                logger.warning("[stackexchange] answer without owner: {}".format(answer['question_id']))
             else:
-                rich_user[f] = None
+                eitem["author"] = answer['owner']['display_name']
+                eitem["author_link"] = None
+                if 'link' in answer['owner']:
+                    eitem["author_link"] = answer['owner']['link']
+                eitem["reputation"] = None
+                if 'reputation' in answer['owner']:
+                    eitem["author_reputation"] = answer['owner']['reputation']
 
-        user = item['data']
+            # data fields to copy
+            copy_fields = common_fields + ["origin", "tag", "creation_date", "is_accepted", "answer_id"]
+            for f in copy_fields:
+                if f in answer:
+                    eitem[f] = answer[f]
+                else:
+                    eitem[f] = None
 
-        rich_user['type'] = 'post'
-        rich_user['author'] = user['userName']
-        rich_user['parent_message_id'] = user['parentMessageId']
-        rich_user['root_message_id'] = user['rootMessageId']
-        rich_user['message_id'] = user['messageId']
-        rich_user['answer'] = user['answer']
-        rich_user['subject'] = user['subject']
+            eitem['is_accepted_answer'] = 1 if answer['is_accepted'] else 0
+            eitem['answer_status'] = "accepted" if answer['is_accepted'] else "not_accepted"
 
-        rich_user['is_root_message'] = False
-        if user['rootMessageId'] == user['messageId']:
-            rich_user['is_root_message'] = True
+            eitem["question_tags"] = question_tags
+            if 'tags' in answer:
+                eitem["answer_tags"] = answer['tags']
 
-        if user['answer']:
-            rich_user['type'] = 'answer'
-            rich_user['is_message_answer'] = 1
-            rich_user['is_message_post'] = 0
+            # Fields which names are translated
+            map_fields = {"title": "question_title"
+                          }
+            for fn in map_fields:
+                eitem[map_fields[fn]] = answer[fn]
+
+            creation_date = unixtime_to_datetime(answer["creation_date"]).isoformat()
+            eitem['creation_date'] = creation_date
+            eitem.update(self.get_grimoire_fields(creation_date, "answer"))
+
+            if self.sortinghat:
+                # date field must be the same than in question to share code
+                answer[self.get_field_date()] = eitem['creation_date']
+                eitem[self.get_field_date()] = eitem['creation_date']
+                eitem.update(self.get_item_sh(answer))
+
+            if self.prjs_map:
+                eitem.update(self.get_item_project(eitem))
+
+        return eitem
+
+    def enrich_items(self, ocean_backend):
+        items_to_enrich = []
+        num_items = 0
+        ins_items = 0
+
+        items = ocean_backend.fetch()
+        for item in items:
+
+            answers_tags = []
+
+            if 'answers' in item['data']:
+                for answer in item['data']['answers']['items']:
+                    # Copy mandatory raw fields
+                    answer['origin'] = item['origin']
+                    answer['tag'] = item['tag']
+
+                    rich_answer = self.get_rich_item(answer,
+                                                     kind='answer',
+                                                     question_tags=item['data']['keywords'])
+                    if 'answer_tags' in rich_answer:
+                        answers_tags.extend(rich_answer['answer_tags'])
+                    items_to_enrich.append(rich_answer)
+
+            rich_question = self.get_rich_item(item)
+            rich_question['answers_tags'] = list(set(answers_tags))
+            rich_question['thread_tags'] = rich_question['answers_tags'] + rich_question['question_tags']
+            items_to_enrich.append(rich_question)
+
+            if len(items_to_enrich) < self.elastic.max_items_bulk:
+                continue
+
+            num_items += len(items_to_enrich)
+            ins_items += self.elastic.bulk_upload(items_to_enrich, self.get_field_unique_id())
+            items_to_enrich = []
+
+        if len(items_to_enrich) > 0:
+            num_items += len(items_to_enrich)
+            ins_items += self.elastic.bulk_upload(items_to_enrich, self.get_field_unique_id())
+
+        if num_items != ins_items:
+            missing = num_items - ins_items
+            logger.error("[stackexchange] {}/{} missing items".format(missing, num_items))
         else:
-            rich_user['is_message_answer'] = 0
-            rich_user['is_message_post'] = 1
+            logger.info("[stackexchange] {} items inserted".format(num_items))
 
-        creation_date = unixtime_to_datetime(user['createDate'] / 1000).isoformat()
-        rich_user['creation_date'] = creation_date
-        rich_user.update(self.get_grimoire_fields(creation_date, "user"))
-
-        if self.sortinghat:
-            rich_user.update(self.get_item_sh(item))
-
-        return rich_user
+        return num_items
