@@ -46,15 +46,29 @@ class LiferayEnrich(Enrich):
     def get_identities(self, item):
         """ Return the identities from an item """
 
-        user = self.get_sh_identity(item)
-        yield user
+        item = item['data']
+
+        for identity in ['creator']:
+            if identity in item and item[identity]:
+                user = self.get_sh_identity(item[identity])
+                yield user
+            if 'answers' in item:
+                for answer in item['answers']['items']:
+                    user = self.get_sh_identity(answer[identity])
+                    yield user
 
     def get_sh_identity(self, item, identity_field=None):
         identity = {}
 
         user = item
-        if 'data' in item and type(item) == dict:
-            user = item['data']['creator']
+        if isinstance(item, dict) and 'data' in item:
+            user = item['data'][identity_field]
+        elif identity_field in item:
+            # for answers
+            user = item[identity_field]
+
+        if 'name' not in user:
+            user['name'] = ''
 
         identity['name'] = user['name']
         identity['email'] = None
@@ -82,50 +96,36 @@ class LiferayEnrich(Enrich):
             # The real data
             question = item['data']
 
-            eitem["item_id"] = question['question_id']
+            eitem["item_id"] = question['id']
             eitem["type"] = 'question'
             eitem["author"] = None
-            if 'owner' in question and question['owner']['user_type'] == "does_not_exist":
-                logger.warning("[stackexchange] question without owner: {}".format(question['question_id']))
-            else:
-                eitem["author"] = question['owner']['display_name']
-                eitem["author_link"] = None
-                if 'link' in question['owner']:
-                    eitem["author_link"] = question['owner']['link']
-                eitem["reputation"] = None
-                if 'reputation' in question['owner']:
-                    eitem["author_reputation"] = question['owner']['reputation']
+            eitem["author"] = question['creator']['name']
+            eitem["author_link"] = None
+            if 'profileURL' in question['creator']:
+                eitem["author_link"] = question['creator']['profileURL']
 
             # data fields to copy
-            copy_fields = common_fields + ['answer_count']
+            copy_fields = common_fields + ['numberOfMessageBoardMessages']
             for f in copy_fields:
                 if f in question:
                     eitem[f] = question[f]
                 else:
                     eitem[f] = None
 
-            eitem["question_tags"] = question['tags']
+            eitem["question_tags"] = question['keywords']
             # eitem["question_tags_custom_analyzed"] = question['tags']
 
             # Fields which names are translated
-            map_fields = {"title": "question_title"}
+            map_fields = {"headline": "question_title"}
             for fn in map_fields:
                 eitem[map_fields[fn]] = question[fn]
-            eitem['title_analyzed'] = question['title']
+            eitem['title_analyzed'] = question['headline']
 
-            eitem['question_has_accepted_answer'] = 0
+            eitem['hasValidAnswer'] = 0
             eitem['question_accepted_answer_id'] = None
 
-            if question['answer_count'] >= 1 and 'answers' not in question:
-                logger.warning("[stackexchange] Missing answers for question {}".format(question['question_id']))
-            elif question['answer_count'] >= 1 and 'answers' in question:
-                answers_id = [p['answer_id'] for p in question['answers']
-                              if 'is_accepted' in p and p['is_accepted']]
-                eitem['question_accepted_answer_id'] = answers_id[0] if answers_id else None
-                eitem['question_has_accepted_answer'] = 1 if eitem['question_accepted_answer_id'] else 0
-
-            creation_date = unixtime_to_datetime(question["creation_date"]).isoformat()
-            eitem['creation_date'] = creation_date
+            creation_date = question["dateCreated"]
+            eitem['dateCreated'] = creation_date
             eitem.update(self.get_grimoire_fields(creation_date, "question"))
 
             if self.sortinghat:
@@ -141,48 +141,42 @@ class LiferayEnrich(Enrich):
             answer = item
 
             eitem["type"] = 'answer'
-            eitem["item_id"] = answer['answer_id']
+            eitem["item_id"] = answer['id']
             eitem["author"] = None
-            if 'owner' in answer and answer['owner']['user_type'] == "does_not_exist":
-                logger.warning("[stackexchange] answer without owner: {}".format(answer['question_id']))
-            else:
-                eitem["author"] = answer['owner']['display_name']
-                eitem["author_link"] = None
-                if 'link' in answer['owner']:
-                    eitem["author_link"] = answer['owner']['link']
-                eitem["reputation"] = None
-                if 'reputation' in answer['owner']:
-                    eitem["author_reputation"] = answer['owner']['reputation']
+            eitem["author"] = answer['creator']['name']
+            eitem["author_link"] = None
+            if 'profileURL' in answer['creator']:
+                eitem["author_link"] = answer['creator']['profileURL']
 
             # data fields to copy
-            copy_fields = common_fields + ["origin", "tag", "creation_date", "is_accepted", "answer_id"]
+            copy_fields = common_fields + ["origin", "tag", "dateCreated", "showAsAnswer", "id"]
             for f in copy_fields:
                 if f in answer:
                     eitem[f] = answer[f]
                 else:
                     eitem[f] = None
 
-            eitem['is_accepted_answer'] = 1 if answer['is_accepted'] else 0
-            eitem['answer_status'] = "accepted" if answer['is_accepted'] else "not_accepted"
+            eitem['is_accepted_answer'] = 1 if answer['showAsAnswer'] else 0
+            eitem['answer_status'] = "accepted" if answer['showAsAnswer'] else "not_accepted"
 
             eitem["question_tags"] = question_tags
             if 'tags' in answer:
-                eitem["answer_tags"] = answer['tags']
+                eitem["answer_tags"] = answer['keywords']
 
             # Fields which names are translated
-            map_fields = {"title": "question_title"
+            map_fields = {"headline": "question_title"
                           }
             for fn in map_fields:
                 eitem[map_fields[fn]] = answer[fn]
 
-            creation_date = unixtime_to_datetime(answer["creation_date"]).isoformat()
+            creation_date = answer["dateCreated"]
             eitem['creation_date'] = creation_date
             eitem.update(self.get_grimoire_fields(creation_date, "answer"))
 
             if self.sortinghat:
                 # date field must be the same than in question to share code
-                answer[self.get_field_date()] = eitem['creation_date']
-                eitem[self.get_field_date()] = eitem['creation_date']
+                answer[self.get_field_date()] = eitem['dateCreated']
+                eitem[self.get_field_date()] = eitem['dateCreated']
                 eitem.update(self.get_item_sh(answer))
 
             if self.prjs_map:
@@ -231,8 +225,8 @@ class LiferayEnrich(Enrich):
 
         if num_items != ins_items:
             missing = num_items - ins_items
-            logger.error("[stackexchange] {}/{} missing items".format(missing, num_items))
+            logger.error("[liferay] {}/{} missing items".format(missing, num_items))
         else:
-            logger.info("[stackexchange] {} items inserted".format(num_items))
+            logger.info("[liferay] {} items inserted".format(num_items))
 
         return num_items
