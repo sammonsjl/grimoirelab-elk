@@ -113,6 +113,7 @@ class LiferayEnrich(Enrich):
                     eitem[f] = None
 
             eitem["question_tags"] = question['keywords']
+            eitem["question_category"] = question['taxonomyCategoryBriefs']
             # eitem["question_tags_custom_analyzed"] = question['tags']
 
             # Fields which names are translated
@@ -158,6 +159,7 @@ class LiferayEnrich(Enrich):
 
             eitem['is_accepted_answer'] = 1 if answer['showAsAnswer'] else 0
             eitem['answer_status'] = "accepted" if answer['showAsAnswer'] else "not_accepted"
+            eitem['question_accepted_answer_id'] = answer['id'] if answer['showAsAnswer'] else None
 
             eitem["question_tags"] = question_tags
             if 'tags' in answer:
