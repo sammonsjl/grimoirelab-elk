@@ -21,12 +21,15 @@
 
 import logging
 
-from grimoirelab_toolkit.datetime import unixtime_to_datetime
-
 from .enrich import Enrich, metadata
-from ..elastic_mapping import Mapping as BaseMapping
 
 logger = logging.getLogger(__name__)
+
+TEAM_TAGS = {
+    'Product Team Core Infrastructure': ['core infrastructure'],
+    'Product Team Search': ['search infrastructure'],
+    'Product Team User and System Management': ['control panel framework'],
+}
 
 
 class LiferayEnrich(Enrich):
@@ -116,6 +119,13 @@ class LiferayEnrich(Enrich):
             eitem["question_category"] = question['taxonomyCategoryBriefs']
             # eitem["question_tags_custom_analyzed"] = question['tags']
 
+            for tag in question['keywords']:
+                team = [key for key, value in TEAM_TAGS.items() if len({tag} & set(value)) >= 1]
+                if team:
+                    eitem["product_team"] = team[0]
+                else:
+                    eitem["product_team"] = None
+
             # Fields which names are translated
             map_fields = {"headline": "question_title"}
             for fn in map_fields:
@@ -186,7 +196,7 @@ class LiferayEnrich(Enrich):
 
         return eitem
 
-    def enrich_items(self, ocean_backend):
+    def enrich_items(self, ocean_backend, events=False):
         items_to_enrich = []
         num_items = 0
         ins_items = 0
