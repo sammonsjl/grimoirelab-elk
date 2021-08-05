@@ -19,17 +19,13 @@
 #   Alvaro del Castillo San Felix <acs@bitergia.com>
 #
 
+import csv
 import logging
+import pkg_resources
 
 from .enrich import Enrich, metadata
 
 logger = logging.getLogger(__name__)
-
-TEAM_TAGS = {
-    'Product Team Core Infrastructure': ['core infrastructure'],
-    'Product Team Search': ['search infrastructure'],
-    'Product Team User and System Management': ['control panel framework'],
-}
 
 
 class LiferayEnrich(Enrich):
@@ -119,10 +115,18 @@ class LiferayEnrich(Enrich):
             eitem["question_category"] = question['taxonomyCategoryBriefs']
             # eitem["question_tags_custom_analyzed"] = question['tags']
 
+            file = open(pkg_resources.resource_filename('grimoire_elk', 'enriched/components.csv'), encoding="utf-8")
+            components = csv.reader(file)
+
+            components_dict = []
+
+            for row in components:
+                components_dict = dict((rows[0].lower(), rows[1]) for rows in components)
+
             for tag in question['keywords']:
-                team = [key for key, value in TEAM_TAGS.items() if len({tag} & set(value)) >= 1]
+                team = components_dict.get(tag)
                 if team:
-                    eitem["product_team"] = team[0]
+                    eitem["product_team"] = team
                 else:
                     eitem["product_team"] = None
 

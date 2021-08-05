@@ -1,0 +1,473 @@
+﻿Message Boards,Lima (C&DM)
+Questions,Headless Experience
+Wiki,Lima (C&DM)
+Asset Libraries,Lima (C&DM)
+Blogs,Lima (C&DM)
+Blogs Auto Tagging,Lima (C&DM)
+Bookmarks,Lima (C&DM)
+Categories,Echo (wem)
+Change Lists,Core Infrastructure
+Content Dashboard,Tango (S&P)
+Content Sets,Echo (wem)
+Content Recommendations,Tango (S&P)
+Content Set Personalization,Tango (S&P)
+Knowledge Base widget,Lima (C&DM)
+Recycle Bin,Echo (wem)
+Shared With Me widget,Lima (C&DM)
+Tags,Echo (wem)
+Translation Management,Lima (C&DM)
+Web Content,Echo (wem)
+Web Content Administration,Echo (wem)
+Web Content Auto Tagging,Echo (wem)
+Web Content Feeds,Echo (wem)
+Web Content Structures,Echo (wem)
+Web Content Templates,Echo (wem)
+Background Task Framework,Core Infrastructure
+Cluster Framework,Core Infrastructure
+Lock Manager,Core Infrastructure
+Logging,Core Infrastructure
+Message Bus,Core Infrastructure
+Mobile Device Detection Framework,Core Infrastructure
+Module Framework,Core Infrastructure
+Monitoring/Audit Framework,Core Infrastructure
+Portlet Container,Core Infrastructure
+Portlet Sandboxes,Core Infrastructure
+Scheduler Engine,Core Infrastructure
+Template Engine,Core Infrastructure
+Freemarker Templates,Core Infrastructure
+React Templates,Frontend Infrastructure
+Soy Templates,Frontend Infrastructure
+Template Context Contributor,Core Infrastructure
+Asset Framework,Echo (wem)
+Asset Sharing Framework,Lima (C&DM)
+Auto Tagging Framework,Lima (C&DM)
+Data Engine,Data Engine
+Database Partitioning,Core Upgrades
+Database Persistence (Service Builder),Core Infrastructure
+MVCC,Core Infrastructure
+ORM,Core Infrastructure
+Database Upgrade framework,Core Upgrades
+DDM Framework,Data Engine
+Document Repository Framework,Lima (C&DM)
+Expando Framework,Core Infrastructure
+Export/Import Framework,Staging
+Friendly URL Service,Lima (C&DM)
+Info Framework,Echo (wem)
+InfoCollectionTextFormatter,Echo (wem)
+InfoDisplayContributor (deprecated),Echo (wem)
+InfoDisplayContributorWrapper,Echo (wem)
+InfoField,Echo (wem)
+InfoFieldSet,Echo (wem)
+InfoFieldValue,Echo (wem)
+InfoForm,Echo (wem)
+InfoItemCapabilitiesProvider,Echo (wem)
+InfoItemDetailsProvider,Echo (wem)
+InfoItemFieldValuesProvider,Echo (wem)
+InfoItemFieldValuesUpdater,Echo (wem)
+InfoItemFormProvider,Echo (wem)
+InfoItemFormVariationsProvider,Echo (wem)
+InfoItemIdentifier,Echo (wem)
+InfoItemObjectProvider,Echo (wem)
+InfoItemPermissionProvider,Echo (wem)
+InfoItemReference,Echo (wem)
+InfoItemRenderer,Echo (wem)
+InfoItemSelector,Echo (wem)
+InfoItemServiceTracker,Echo (wem)
+InfoItemTemplatedRenderer,Echo (wem)
+InfoListProvider,Echo (wem)
+InfoListRenderer,Echo (wem)
+InfoTextFormatter,Echo (wem)
+Item Selector,Lima (C&DM)
+Platform Configuration Framework,Core Infrastructure
+Portal Cache Manager,Core Infrastructure
+Portlet Settings Framework,Core Infrastructure
+Recycle Bin Framework,Echo (wem)
+Request Context Contributor -don't map to jira,Tango (S&P)
+Search Framework,Search
+Segments Criteria Contributor - don't map to jira,Tango (S&P)
+Site Initializer,Echo (wem)
+Stores Framework,Core Infrastructure
+Subscription Manager,Lima (C&DM)
+Upload Attachments Framework,Lima (C&DM)
+Workflow Framework,Workflow
+Blade,Development Tools
+Blade CLI,Development Tools
+Layout Template,Development Tools
+Theme Contributor Template,Development Tools
+Theme Template,Development Tools
+BOM,Development Tools
+Ext environment,Core Infrastructure
+Fragments Toolkit,Echo (wem)
+Gradle plugins,Development Tools
+JS Themes Toolkit,Frontend Infrastructure
+Theme Generator,Frontend Infrastructure
+Theme Tasks,Frontend Infrastructure
+JS Toolkit,Frontend Infrastructure
+Liferay IDE,Liferay IDE
+Maven plugins,Development Tools
+NPM Tools,Frontend Infrastructure
+Plugin SDK,Core Infrastructure
+REST Builder,Headless Experience
+Service Builder,Core Infrastructure
+TestRay,Solutions
+Theme Builder,Development Tools
+Themes SDK (legacy),Frontend Infrastructure
+Adaptive Media,Lima (C&DM)
+Document Auto Tagging,Lima (C&DM)
+Documents & Media,Lima (C&DM)
+Document Types,Lima (C&DM)
+Documents & Media administration,Lima (C&DM)
+Metadata Sets,Lima (C&DM)
+External Document Repositories,Lima (C&DM)
+CMIS,Lima (C&DM)
+Documentum Connector,Lima (C&DM)
+Sharepoint Connector,Lima (C&DM)
+Google Drive Integration,Lima (C&DM)
+Image Auto Tagging,Lima (C&DM)
+Image Editor,Lima (C&DM)
+Media Gallery Widget,Lima (C&DM)
+My Sync Devices widget,Sync Desktop
+Office 365 Integration,Lima (C&DM)
+Recent Downloads widget,Lima (C&DM)
+Sync,Sync Desktop
+WebDAV access,Lima (C&DM)
+Dynamic Data Lists,Forms
+Form Rules Builder,Forms
+Forms Builder,Forms
+Polls,Forms
+Web Form,Forms
+Alloy Editor,Frontend Infrastructure
+Alloy UI,Frontend Infrastructure
+AMD Module Loader,Frontend Infrastructure
+Clay,Frontend Infrastructure
+Control Menu,Echo (wem)
+Dataset Display,Frontend Infrastructure
+Dynamic CSS filter (sass),Frontend Infrastructure
+Dynamic Includes,Core Infrastructure
+Editor Config Contributor,Lima (C&DM)
+Faces,Faces & JCP
+JS APIs and Utilities,Frontend Infrastructure
+Components Web API,Frontend Infrastructure
+Frontend JS Web API,Frontend Infrastructure
+Node Shims API,Frontend Infrastructure
+React Web API,Frontend Infrastructure
+JS Portlet Extender,Frontend Infrastructure
+Lexicon,Lexicon
+Metal.js,Frontend Infrastructure
+Minifier ,Frontend Infrastructure
+MVC Portlet,Core Infrastructure
+Product Menu,Echo (wem)
+Product Navigation Framework,Echo (wem)
+RTL Infrastructure,Frontend Infrastructure
+Screen Navigation Framework,Echo (wem)
+Search Container,Frontend Infrastructure
+Simulation Menu,Echo (wem)
+Soy Portlet Bridge,Frontend Infrastructure
+SPA Engine (Senna),Frontend Infrastructure
+Tag Libraries,Frontend Infrastructure
+Clay Taglib,Frontend Infrastructure
+Liferay AUI Taglib,Frontend Infrastructure
+Liferay Chart Taglib,Frontend Infrastructure
+Liferay Dynamic Section Taglib,Frontend Infrastructure
+Liferay Form Navigator Taglib,Frontend Infrastructure
+Liferay Frontend Taglib,Frontend Infrastructure
+Liferay Soy Taglib,Frontend Infrastructure
+Liferay Theme Taglib,Frontend Infrastructure
+Liferay UI Taglibs,Frontend Infrastructure
+Liferay Util Taglib,Frontend Infrastructure
+User Personal Bar,User & System Management
+AuthVerifier Framework,Application Security
+AutoLogin Framework,Application Security
+Digital Signature Framework,Application Security
+Permissions Framework,Application Security
+51 Degrees,Core Infrastructure
+Apache Felix (OSGi),Core Infrastructure
+CKEditor,Frontend Infrastructure
+TinyMCE Editor,Frontend Infrastructure
+Velocity Templates,Core Infrastructure
+Amazon Rankings widget,ob
+Calendar,Workflow
+Currency Converter widget,ob
+Custom Fields,User & System Management
+Dictionary widget,ob
+Google Adsense Connector,Echo (wem)
+IP Geocoder,Sync Desktop
+LCS Client,Connected Services
+License Manager,Release Management
+Loan Calculator widget,ob
+Mail,ob
+Netvibes widget,Echo (wem)
+Network Utilities widget,ob
+Object,Objects
+Opensocial Gadgets,Sync Desktop
+Password Generator widget,ob
+Quick Note widget,ob
+Session management,Core Infrastructure
+Shopping widget,ob
+SLIM runtime,Core Infrastructure
+Translator widget,ob
+Unit Converter widget,ob
+vLDAP,ob
+Weather widget,Echo (wem)
+Web Proxy widget,Echo (wem)
+WYSIWYG widget,
+Liferay Push,Headless Experience
+Mobile SDK,Headless Experience
+Screens,Headless Experience
+Applications Menu,Echo (wem)
+Navigation Menus,Echo (wem)
+Navigation Widgets,Echo (wem)
+Breadcrumb widget,Echo (wem)
+My Sites widget,Echo (wem)
+Navigation widget,Echo (wem)
+Site Map widget,Echo (wem)
+Sites Directory widget,Echo (wem)
+Announcements & Alerts widgets,Lima (C&DM)
+My Subscription widget,Lima (C&DM)
+User Notifications,Lima (C&DM)
+Search Bar widget,Search
+Search Facet widgets,Search
+Search Insights widget,Search
+Search Options widget,Search
+Search Results widget,Search
+Search Suggestions widget,Search
+Search widget,Search
+AntiSamy Sanitizer,Application Security
+Audit Administration,Application Security
+Authentication & SSO,Application Security
+Captcha,Application Security
+CAS,Application Security
+Facebook Connect,Application Security
+LDAP,Application Security
+Multi-factor authentication,Application Security
+NTLM,Application Security
+OpenAM,Application Security
+OpenID Connect,Application Security
+Password service,Application Security
+SAML,Application Security
+Sign in widget,Application Security
+Token-based SSO,Application Security
+Tunnel authentication,Application Security
+Authorization,Application Security
+Access Control Policies,Application Security
+CORS,Application Security
+OAuth,Application Security
+PACL,Application Security
+Service Access Policies,Application Security
+Service Access Quotas,Application Security
+Audience Targeting,Tango (S&P)
+Audience Targeting Rules Updater,Tango (S&P)
+Segmens Editor,Tango (S&P)
+Segments Analytics Cloud Integration,Tango (S&P)
+Segments Simulation Panel,Tango (S&P)
+Content Display Widgets,Echo (wem)
+Asset Publisher widget,Echo (wem)
+Flash widget,Echo (wem)
+Google Maps widget,Echo (wem)
+Highest Rated Assets widget,Echo (wem)
+Iframe widget,Echo (wem)
+Language widget,Echo (wem)
+Most Viewed Assets widget,Echo (wem)
+Nested Portlets widget,Echo (wem)
+Related Assets widget,Echo (wem)
+RSS Publisher widget,Echo (wem)
+Web Content Display widget,Echo (wem)
+Web Content List widget,Echo (wem)
+Web Content Search widget,Echo (wem)
+XSL Content widget,Echo (wem)
+Youtube widget,Echo (wem)
+Fragment Administration,Echo (wem)
+Mobile Device Rules,Core Infrastructure
+Out of the box fragments,Echo (wem)
+Banner Components Fragment,Echo (wem)
+Button Fragment,Echo (wem)
+Card Fragment,Echo (wem)
+Collections Display Fragment,Echo (wem)
+Container Fragment,Echo (wem)
+Content Display Fragment,Echo (wem)
+Features Components Fragment,Echo (wem)
+Filter Fragment,Echo (wem)
+Flags Fragment,Echo (wem)
+Footer Nav Dark Fragment,Echo (wem)
+Footer Nav Light Fragment,Echo (wem)
+Grid Fragment,Echo (wem)
+Header Dark Fragment,Echo (wem)
+Header Light Fragment,Echo (wem)
+Heading Fragment,Echo (wem)
+Highlights Components Fragment,Echo (wem)
+HTML Fragment,Echo (wem)
+Image Fragment,Echo (wem)
+Navigation Menu Fragment,Echo (wem)
+Paragraph Fragment,Echo (wem)
+Ratings Fragment,Echo (wem)
+Search Fragment,Echo (wem)
+Section Fragment,Echo (wem)
+Separator Fragment,Echo (wem)
+Slider Fragment,Echo (wem)
+Social Fragment,Echo (wem)
+Sort Fragment,Echo (wem)
+Spacer Fragment,Echo (wem)
+Tabs Fragment,Echo (wem)
+Video Fragment,Echo (wem)
+Page Templates,Echo (wem)
+Content Page Templates,Echo (wem)
+Content Page Templates copy,Echo (wem)
+Display Page Templates,Echo (wem)
+Master pages,Echo (wem)
+Widget Page Templates,Echo (wem)
+Pages,Echo (wem)
+A/B Testing for Content Pages,Tango (S&P)
+Content Pages,Echo (wem)
+Content Performance,Tango (S&P)
+Experience Personalization for Content Pages,Tango (S&P)
+Page Administration,Echo (wem)
+Page Customizations,Echo (wem)
+Page Editor,Echo (wem)
+Page Reviews,Lima (C&DM)
+Pages Tree,Echo (wem)
+Widget Pages,Echo (wem)
+Personal Dashboard,Echo (wem)
+SEO Tools,Lima (C&DM)
+OpenGraph tags,Lima (C&DM)
+Page Audit,Tango (S&P)
+Page SEO links,Lima (C&DM)
+Sitemap Protocol,Echo (wem)
+URL Redirections,Lima (C&DM)
+Site Membership,Echo (wem)
+Site Settings,Echo (wem)
+Site Teams,User & System Management
+Sites Administration,Echo (wem)
+Site Templates,Staging
+Sites,Echo (wem)
+Style Books,Echo (wem)
+Widget Configuration,Echo (wem)
+Configuration Templates,Echo (wem)
+Widget Export/Import,Staging
+Widget Look & Feel,Echo (wem)
+Widget Permissions,User & System Management
+Widget Templates,Forms
+Activities widget,Lima (C&DM)
+Chat to Talk,Solutions
+Comments,Lima (C&DM)
+Page Comments widget,Lima (C&DM)
+Contacts,User & System Management
+Contacts Center widget,User & System Management
+Members widget,User & System Management
+My Contacts widget,User & System Management
+Profile widget,User & System Management
+Directory,Lima (C&DM)
+Friends Directory widget,Lima (C&DM)
+My Sites Directory widget,Lima (C&DM)
+Portal Directory widget,Lima (C&DM)
+Site Members Directory widget,Lima (C&DM)
+Group Statistics widget,Lima (C&DM)
+Invite Members widget,Lima (C&DM)
+Mentions,Lima (C&DM)
+Microblogs,Lima (C&DM)
+My Contacts widget,Lima (C&DM)
+Page Flags widget,Lima (C&DM)
+Powwow widget,
+Private Messaging widget,Lima (C&DM)
+Ratings,Lima (C&DM)
+Page Ratings widget,Lima (C&DM)
+Social Activity,Lima (C&DM)
+Social Bookmarks,Lima (C&DM)
+Social Coding widget,Lima (C&DM)
+Social Networking Plugin,Lima (C&DM)
+Friends Activities widget,Lima (C&DM)
+Friends widget,Lima (C&DM)
+Map widget,Lima (C&DM)
+Meetups widget,Lima (C&DM)
+Members widget (old),Lima (C&DM)
+Members' Activities widget (old),Lima (C&DM)
+Summary widget,Lima (C&DM)
+Wall widget,Lima (C&DM)
+Twitter widget,Lima (C&DM)
+User Statistics widget,Lima (C&DM)
+Vimeo,Lima (C&DM)
+Export/Import of LARs,Staging
+Local Staging,Staging
+Remote Staging,Staging
+Application Servers,Core Infrastructure
+bnd,Development Tools
+Databases,Core Infrastructure
+Elasticsearch,Search
+Gradle,Development Tools
+JAAS,Application Security
+Java/JVMs,Development Tools
+jQuery,Frontend Infrastructure
+JSF,Faces & JCP
+Kerberos,Application Security
+Lodash,Frontend Infrastructure
+Lucene,Search
+Maven,Development Tools
+React,Frontend Infrastructure
+Shibboleth,Application Security
+SiteMinder,Application Security
+SOLR,Search
+Spring,Core Infrastructure
+App Manager,Marketplace
+Components,User & System Management
+Instance Settings,User & System Management
+Marketplace Purchased,Marketplace
+Marketplace Store,Marketplace
+Server Administration,User & System Management
+System Settings,User & System Management
+Virtual Instances,User & System Management
+Database Upgrade tool,Core Upgrades
+Deploy manager,Core Infrastructure
+Docker Images,Docker Image
+Patching tool,Patching Tool
+Rolling Restarts,Core Infrastructure
+Liferay Themes,Frontend Infrastructure
+Admin (Control Panel),Frontend Infrastructure
+Classic,Frontend Infrastructure
+Fjord,Frontend Infrastructure
+London (legacy),Frontend Infrastructure
+Porygon,Frontend Infrastructure
+Westeros,Frontend Infrastructure
+Zoe (legacy),Frontend Infrastructure
+Themes Infrastructure,Frontend Infrastructure
+Compatibility Layer,Frontend Infrastructure
+Layout Templates,Frontend Infrastructure
+Portlet Decorators,Frontend Infrastructure
+Resources Importer,Staging
+Theme Contributor Extender,Frontend Infrastructure
+Theme Settings,Frontend Infrastructure
+Account Settings,User & System Management
+Business Accounts,User & System Management
+My Dashboard,User & System Management
+My Organizations widget,User & System Management
+My Profile,User & System Management
+Organizations,User & System Management
+Password Policies,User & System Management
+Personal Data Erasure,User & System Management
+Roles administration,User & System Management
+Self registration,User & System Management
+User administration,User & System Management
+User groups,User & System Management
+User Monitoring,User & System Management
+GraphQL Infrastructure (vulcan),Headless Experience
+JAX-RS Integration,Application Security
+JAX-WS Integration,Application Security
+JSON Web Services Infrastructure,Application Security
+REST Infrastructure (vulcan),Headless Experience
+SOAP Web Services Infrastructure,Application Security
+Account API,User & System Management
+Admin Content API,Headless Experience
+Admin Taxonomy API,Headless Experience
+Admin User API,User & System Management
+Admin Workflow API,Workflow
+App Builder API,App Builder
+Batch Engine API,Headless Experience
+Bulk API,Lima (C&DM)
+Data Engine API,Data Engine
+Delivery API,Headless Experience
+Form API,Forms
+JSON Web Services,Core Infrastructure
+Kaleo Engine,Workflow
+Kaleo Forms,Workflow
+My Submissions widget,Workflow
+My Workflow Tasks widget,Workflow
+Workflow administration,Workflow
+Workflow Metrics,Workflow
