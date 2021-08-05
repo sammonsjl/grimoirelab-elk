@@ -86,9 +86,7 @@ class LiferayEnrich(Enrich):
 
         # Fields common in questions and answers
         common_fields = ["headline", "numberOfMessageBoardMessages", "id",
-                         "ratingCount", "ratingAverage",
-                         "ratingValue", "viewCount",
-                         "dateModified", "friendlyUrlPath", "keywords"]
+                         "viewCount", "dateModified", "keywords"]
 
         if kind == 'question':
             self.copy_raw_fields(self.RAW_FIELDS_COPY, item, eitem)
@@ -99,9 +97,7 @@ class LiferayEnrich(Enrich):
             eitem["type"] = 'question'
             eitem["author"] = None
             eitem["author"] = question['creator']['name']
-            eitem["author_link"] = None
-            if 'profileURL' in question['creator']:
-                eitem["author_link"] = question['creator']['profileURL']
+            eitem["author_link"] = question['creator']['userAccount']['alternateName']
 
             # data fields to copy
             copy_fields = common_fields + ['numberOfMessageBoardMessages']
@@ -139,7 +135,10 @@ class LiferayEnrich(Enrich):
             map_fields = {"headline": "question_title"}
             for fn in map_fields:
                 eitem[map_fields[fn]] = question[fn]
+
             eitem['title_analyzed'] = question['headline']
+
+            eitem['link'] = question['messageBoardSection']['title'.lower()] + question['friendlyUrlPath']
 
             eitem['hasValidAnswer'] = 0
             eitem['question_accepted_answer_id'] = None
@@ -164,9 +163,7 @@ class LiferayEnrich(Enrich):
             eitem["item_id"] = answer['id']
             eitem["author"] = None
             eitem["author"] = answer['creator']['name']
-            eitem["author_link"] = None
-            if 'profileURL' in answer['creator']:
-                eitem["author_link"] = answer['creator']['profileURL']
+            eitem["author_link"] = answer['creator']['userAccount']['alternateName']
 
             # data fields to copy
             copy_fields = common_fields + ["origin", "tag", "dateCreated", "showAsAnswer", "id"]
@@ -189,6 +186,8 @@ class LiferayEnrich(Enrich):
                           }
             for fn in map_fields:
                 eitem[map_fields[fn]] = answer[fn]
+
+            eitem['link'] = answer['messageBoardSection'] + answer['friendlyUrlPath']
 
             creation_date = answer["dateCreated"]
             eitem['creation_date'] = creation_date
@@ -220,6 +219,8 @@ class LiferayEnrich(Enrich):
                     # Copy mandatory raw fields
                     answer['origin'] = item['origin']
                     answer['tag'] = item['tag']
+                    answer['friendlyUrlPath'] = item['data']['friendlyUrlPath']
+                    answer['messageBoardSection'] = item['data']['messageBoardSection']['title'.lower()]
 
                     rich_answer = self.get_rich_item(answer,
                                                      kind='answer',
