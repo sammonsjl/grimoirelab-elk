@@ -130,6 +130,11 @@ class LiferayEnrich(Enrich):
                 else:
                     eitem["product_team"] = None
 
+            if question['numberOfMessageBoardMessages'] != 0:
+                eitem["is_liferay_answered"] = 1
+            else:
+                eitem["is_liferay_answered"] = 0
+
             # Fields which names are translated
             map_fields = {"headline": "question_title"}
             for fn in map_fields:
