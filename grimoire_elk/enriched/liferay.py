@@ -212,10 +212,17 @@ class LiferayEnrich(Enrich):
         items = ocean_backend.fetch()
         for item in items:
 
+            if item['data']['status'] != "approved":
+                continue
+
             answers_tags = []
 
             if 'answers' in item['data']:
                 for answer in item['data']['answers']['items']:
+
+                    if answer['status'] != "approved":
+                        continue
+
                     # Copy mandatory raw fields
                     answer['origin'] = item['origin']
                     answer['tag'] = item['tag']
