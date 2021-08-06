@@ -96,7 +96,7 @@ class LiferayEnrich(Enrich):
             eitem["item_id"] = question['id']
             eitem["type"] = 'question'
             eitem["author"] = None
-            eitem["author"] = question['creator']['name']
+            eitem["author"] = question['creator']['userAccount']['name']
             eitem["author_link"] = question['creator']['userAccount']['alternateName']
 
             # data fields to copy
@@ -138,7 +138,7 @@ class LiferayEnrich(Enrich):
 
             eitem['title_analyzed'] = question['headline']
 
-            eitem['link'] = question['messageBoardSection']['title'.lower()] + question['friendlyUrlPath']
+            eitem['link'] = question['messageBoardSection']['title'].lower() + "/" + question['friendlyUrlPath']
 
             eitem['hasValidAnswer'] = 0
             eitem['question_accepted_answer_id'] = None
@@ -162,7 +162,7 @@ class LiferayEnrich(Enrich):
             eitem["type"] = 'answer'
             eitem["item_id"] = answer['id']
             eitem["author"] = None
-            eitem["author"] = answer['creator']['name']
+            eitem["author"] = answer['creator']['userAccount']['name']
             eitem["author_link"] = answer['creator']['userAccount']['alternateName']
 
             # data fields to copy
@@ -187,7 +187,7 @@ class LiferayEnrich(Enrich):
             for fn in map_fields:
                 eitem[map_fields[fn]] = answer[fn]
 
-            eitem['link'] = answer['messageBoardSection'] + answer['friendlyUrlPath']
+            eitem['link'] = answer['link']
 
             creation_date = answer["dateCreated"]
             eitem['creation_date'] = creation_date
@@ -219,8 +219,8 @@ class LiferayEnrich(Enrich):
                     # Copy mandatory raw fields
                     answer['origin'] = item['origin']
                     answer['tag'] = item['tag']
-                    answer['friendlyUrlPath'] = item['data']['friendlyUrlPath']
-                    answer['messageBoardSection'] = item['data']['messageBoardSection']['title'.lower()]
+                    answer['link'] = item['data']['messageBoardSection']['title'].lower() + "/" + \
+                        item['data']['friendlyUrlPath']
 
                     rich_answer = self.get_rich_item(answer,
                                                      kind='answer',
