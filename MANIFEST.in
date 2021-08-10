@@ -1,2 +1,2 @@
 include README.md
-include grimoire_elk/enriched/*.csv
+include grimoire_elk/enriched/components.csv
