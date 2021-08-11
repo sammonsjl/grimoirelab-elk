@@ -103,7 +103,7 @@ class LiferayEnrich(Enrich):
             eitem["question_category"] = question['taxonomyCategoryBriefs']
             # eitem["question_tags_custom_analyzed"] = question['tags']
 
-            file = open(pkg_resources.resource_filename('grimoire_elk', 'enriched/include/components.csv'), encoding="utf-8")
+            file = open(pkg_resources.resource_filename('grimoire_elk', 'enriched/mappings/components.csv'), encoding="utf-8")
             components = csv.reader(file)
 
             components_dict = []
