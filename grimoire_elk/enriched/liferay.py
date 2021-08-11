@@ -66,17 +66,9 @@ class LiferayEnrich(Enrich):
             # for answers
             user = item[identity_field]
 
-        if 'name' not in user:
-            user['name'] = ''
-
-        identity['name'] = user['name']
-        identity['email'] = None
-        identity['username'] = None
-
-        if 'emailAddress' in user['userAccount']:
-            identity['email'] = user['userAccount']['emailAddress']
-        if 'alternateName' in user['userAccount']:
-            identity['username'] = user['userAccount']['alternateName']
+        identity['name'] = user['userAccount']['name']
+        identity['email'] = user['userAccount']['emailAddress']
+        identity['username'] = user['userAccount']['alternateName']
 
         return identity
 
