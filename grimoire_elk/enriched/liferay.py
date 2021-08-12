@@ -78,7 +78,7 @@ class LiferayEnrich(Enrich):
 
         # Fields common in questions and answers
         common_fields = ["headline", "numberOfMessageBoardMessages", "id",
-                         "viewCount", "dateModified", "keywords"]
+                         "viewCount", "dateModified", "keywords", "hasValidAnswer"]
 
         if kind == 'question':
             self.copy_raw_fields(self.RAW_FIELDS_COPY, item, eitem)
@@ -103,12 +103,13 @@ class LiferayEnrich(Enrich):
             eitem["question_category"] = question['taxonomyCategoryBriefs']
             # eitem["question_tags_custom_analyzed"] = question['tags']
 
-            file = open(pkg_resources.resource_filename('grimoire_elk', 'enriched/mappings/components.csv'), encoding="utf-8")
+            file = open(pkg_resources.resource_filename('grimoire_elk', 'enriched/mappings/components.csv'),
+                        encoding="utf-8")
             components = csv.reader(file)
 
             components_dict = []
 
-            for row in components:
+            for _ in components:
                 components_dict = dict((rows[0].lower(), rows[1]) for rows in components)
 
             for tag in question['keywords']:
@@ -132,7 +133,6 @@ class LiferayEnrich(Enrich):
 
             eitem['link'] = question['messageBoardSection']['title'].lower() + "/" + question['friendlyUrlPath']
 
-            eitem['hasValidAnswer'] = 0
             eitem['question_accepted_answer_id'] = None
 
             creation_date = question["dateCreated"]
@@ -219,7 +219,7 @@ class LiferayEnrich(Enrich):
                     answer['origin'] = item['origin']
                     answer['tag'] = item['tag']
                     answer['link'] = item['data']['messageBoardSection']['title'].lower() + "/" + \
-                        item['data']['friendlyUrlPath']
+                                     item['data']['friendlyUrlPath']
 
                     rich_answer = self.get_rich_item(answer,
                                                      kind='answer',
