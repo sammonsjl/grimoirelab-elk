@@ -112,7 +112,7 @@ class LiferayEnrich(Enrich):
             for _ in components:
                 components_dict = dict((rows[0].lower(), rows[1]) for rows in components)
 
-            for tag in question['keywords']:
+            for tag in question['keywords'].lower:
                 team = components_dict.get(tag)
                 if team:
                     eitem["product_team"] = team
