@@ -169,9 +169,23 @@ class LiferayEnrich(Enrich):
             eitem['answer_status'] = "accepted" if answer['showAsAnswer'] else "not_accepted"
             eitem['question_accepted_answer_id'] = answer['id'] if answer['showAsAnswer'] else None
 
-            eitem["question_tags"] = question_tags
-            if 'tags' in answer:
-                eitem["answer_tags"] = answer['keywords']
+            eitem["answer_tags"] = question_tags
+
+            file = open(pkg_resources.resource_filename('grimoire_elk', 'enriched/mappings/components.csv'),
+                        encoding="utf-8")
+            components = csv.reader(file)
+
+            components_dict = []
+
+            for _ in components:
+                components_dict = dict((rows[0].lower(), rows[1]) for rows in components)
+
+            for tag in question_tags:
+                team = components_dict.get(tag.lower())
+                if team:
+                    eitem["product_team"] = team
+                else:
+                    eitem["product_team"] = None
 
             # Fields which names are translated
             map_fields = {"headline": "question_title"
