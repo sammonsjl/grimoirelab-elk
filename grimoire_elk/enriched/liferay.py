@@ -77,8 +77,8 @@ class LiferayEnrich(Enrich):
         eitem = {}
 
         # Fields common in questions and answers
-        common_fields = ["headline", "numberOfMessageBoardMessages", "id",
-                         "viewCount", "dateModified", "keywords", "hasValidAnswer"]
+        common_fields = ["headline", "id", "viewCount", "dateModified",
+                         "keywords"]
 
         if kind == 'question':
             self.copy_raw_fields(self.RAW_FIELDS_COPY, item, eitem)
@@ -233,7 +233,7 @@ class LiferayEnrich(Enrich):
                     answer['origin'] = item['origin']
                     answer['tag'] = item['tag']
                     answer['link'] = item['data']['messageBoardSection']['title'].lower() + "/" + \
-                                     item['data']['friendlyUrlPath']
+                        item['data']['friendlyUrlPath']
 
                     rich_answer = self.get_rich_item(answer,
                                                      kind='answer',
