@@ -36,9 +36,7 @@ from graal.backends.core.cocom import CoCom, CoComCommand
 from graal.backends.core.codep import CoDep, CoDepCommand
 from graal.backends.core.colic import CoLic, CoLicCommand
 # Connectors for Perceval
-from grimoire_elk.enriched.liferay import LiferayEnrich
 from grimoire_elk.raw.hyperkitty import HyperKittyOcean
-from grimoire_elk.raw.liferay import LiferayOcean
 from perceval.backends.core.askbot import Askbot, AskbotCommand
 from perceval.backends.core.bugzilla import Bugzilla, BugzillaCommand
 from perceval.backends.core.bugzillarest import BugzillaREST, BugzillaRESTCommand
@@ -49,6 +47,7 @@ from perceval.backends.finos.finosmeetings import FinosMeetings, FinosMeetingsCo
 from perceval.backends.core.gerrit import Gerrit, GerritCommand
 from perceval.backends.core.git import Git, GitCommand
 from perceval.backends.core.github import GitHub, GitHubCommand
+from perceval.backends.core.githubreleases import GitHubReleases, GitHubReleasesCommand
 from perceval.backends.core.githubql import GitHubQL, GitHubQLCommand
 from perceval.backends.core.gitlab import GitLab, GitLabCommand
 from perceval.backends.core.gitter import Gitter, GitterCommand
@@ -98,6 +97,7 @@ from .enriched.dockerhub import DockerHubEnrich
 from .enriched.functest import FunctestEnrich
 from .enriched.gerrit import GerritEnrich
 from .enriched.git import GitEnrich
+from .enriched.githubreleases import GitHubReleasesEnrich
 from .enriched.github import GitHubEnrich
 from .enriched.githubql import GitHubQLEnrich
 from .enriched.github2 import GitHubEnrich2
@@ -108,6 +108,7 @@ from .enriched.groupsio import GroupsioEnrich
 from .enriched.hyperkitty import HyperKittyEnrich
 from .enriched.jenkins import JenkinsEnrich
 from .enriched.jira import JiraEnrich
+from .enriched.liferay import LiferayEnrich
 from .enriched.kitsune import KitsuneEnrich
 from .enriched.launchpad import LaunchpadEnrich
 from .enriched.mattermost import MattermostEnrich
@@ -143,6 +144,7 @@ from .raw.functest import FunctestOcean
 from .raw.gerrit import GerritOcean
 from .raw.git import GitOcean
 from .raw.github import GitHubOcean
+from .raw.githubreleases import GitHubReleaseOcean
 from .raw.githubql import GitHubQLOcean
 from .raw.gitlab import GitLabOcean
 from .raw.gitter import GitterOcean
@@ -151,6 +153,7 @@ from .raw.graal import GraalOcean
 from .raw.groupsio import GroupsioOcean
 from .raw.jenkins import JenkinsOcean
 from .raw.jira import JiraOcean
+from .raw.liferay import LiferayOcean
 from .raw.kitsune import KitsuneOcean
 from .raw.launchpad import LaunchpadOcean
 from .raw.mattermost import MattermostOcean
@@ -247,6 +250,7 @@ def get_connectors():
             "gerrit": [Gerrit, GerritOcean, GerritEnrich, GerritCommand],
             "git": [Git, GitOcean, GitEnrich, GitCommand],
             "github": [GitHub, GitHubOcean, GitHubEnrich, GitHubCommand],
+            "githubreleases": [GitHubReleases, GitHubReleaseOcean, GitHubReleasesEnrich, GitHubReleasesCommand],
             "githubql": [GitHubQL, GitHubQLOcean, GitHubQLEnrich, GitHubQLCommand],
             "github2": [GitHub, GitHubOcean, GitHubEnrich2, GitHubCommand],
             "gitlab": [GitLab, GitLabOcean, GitLabEnrich, GitLabCommand],
