@@ -250,7 +250,7 @@ def get_connectors():
             "gerrit": [Gerrit, GerritOcean, GerritEnrich, GerritCommand],
             "git": [Git, GitOcean, GitEnrich, GitCommand],
             "github": [GitHub, GitHubOcean, GitHubEnrich, GitHubCommand],
-            "githubreleases": [GitHubReleases, GitHubReleaseOcean, GitHubReleasesEnrich, GitHubReleasesCommand],
+            "github_releases": [GitHubReleases, GitHubReleaseOcean, GitHubReleasesEnrich, GitHubReleasesCommand],
             "githubql": [GitHubQL, GitHubQLOcean, GitHubQLEnrich, GitHubQLCommand],
             "github2": [GitHub, GitHubOcean, GitHubEnrich2, GitHubCommand],
             "gitlab": [GitLab, GitLabOcean, GitLabEnrich, GitLabCommand],
