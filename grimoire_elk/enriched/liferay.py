@@ -116,8 +116,6 @@ class LiferayEnrich(Enrich):
                 team = components_dict.get(tag.lower())
                 if team:
                     eitem["product_team"] = team
-                else:
-                    eitem["product_team"] = None
 
             if question['numberOfMessageBoardMessages'] != 0:
                 eitem["is_liferay_answered"] = 1
