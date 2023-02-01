@@ -43,7 +43,6 @@ from perceval.backends.core.bugzillarest import BugzillaREST, BugzillaRESTComman
 from perceval.backends.core.confluence import Confluence, ConfluenceCommand
 from perceval.backends.core.discourse import Discourse, DiscourseCommand
 from perceval.backends.core.dockerhub import DockerHub, DockerHubCommand
-from perceval.backends.finos.finosmeetings import FinosMeetings, FinosMeetingsCommand
 from perceval.backends.core.gerrit import Gerrit, GerritCommand
 from perceval.backends.core.git import Git, GitCommand
 from perceval.backends.core.github import GitHub, GitHubCommand
@@ -245,7 +244,6 @@ def get_connectors():
             "crates": [Crates, CratesOcean, CratesEnrich, CratesCommand],
             "discourse": [Discourse, DiscourseOcean, DiscourseEnrich, DiscourseCommand],
             "dockerhub": [DockerHub, DockerHubOcean, DockerHubEnrich, DockerHubCommand],
-            "finosmeetings": [FinosMeetings, FinosMeetingsOcean, FinosMeetingsEnrich, FinosMeetingsCommand],
             "functest": [Functest, FunctestOcean, FunctestEnrich, FunctestCommand],
             "gerrit": [Gerrit, GerritOcean, GerritEnrich, GerritCommand],
             "git": [Git, GitOcean, GitEnrich, GitCommand],
